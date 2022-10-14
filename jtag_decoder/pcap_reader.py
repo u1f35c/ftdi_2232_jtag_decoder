@@ -13,14 +13,14 @@ def pcap_json_reader(fin):
 
     for frame_idx, cap in enumerate(json.load(fin)):
         protocol = cap.get('_source', {}).get('layers', {}).get('frame', {}).get('frame.protocols')
-        if protocol != 'usb:ftdift':
+        if protocol != 'usb:ftdi-ft':
             continue
 
-        tx_data = cap.get('_source', {}).get('layers', {}).get('ftdift', {}).get('ftdift.if_a_tx_payload')
+        tx_data = cap.get('_source', {}).get('layers', {}).get('ftdi-ft', {}).get('ftdi-ft.if_a_tx_payload')
         if tx_data is not None:
             ftdi_bytes.extend((int(byte, 16) for byte in tx_data.split(':')), frame=frame_idx+1)
 
-        rx_data = cap.get('_source', {}).get('layers', {}).get('ftdift', {}).get('ftdift.if_a_rx_payload')
+        rx_data = cap.get('_source', {}).get('layers', {}).get('ftdi-ft', {}).get('ftdi-ft.if_a_rx_payload')
         if rx_data is not None:
 
             in_data = tuple(int(byte, 16) for byte in rx_data.split(':'))
