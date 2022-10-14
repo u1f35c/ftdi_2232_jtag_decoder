@@ -24,6 +24,7 @@ class FtdiCommandType(Enum):
     SET_DIVISOR = 0x86
     FLUSH = 0x87
     DISABLE_DIV_BY_5 = 0x8a
+    DISABLE_3_PHASE_CLK = 0x8d
     DISABLE_RCLK = 0x97
     # Run clock without changing TDI/TDO/TMS
     CLOCK_NO_DATA = 0x8f
@@ -224,6 +225,8 @@ def decode_commands(ftdi_bytes, ftdi_replies):
             add_command(FtdiCommandType.FLUSH, byte)
         elif byte == FtdiCommandType.DISABLE_DIV_BY_5.value:
             add_command(FtdiCommandType.DISABLE_DIV_BY_5, byte)
+        elif byte == FtdiCommandType.DISABLE_3_PHASE_CLK.value:
+            add_command(FtdiCommandType.DISABLE_3_PHASE_CLK, byte)
         else:
             raise DecodeError('Unknown byte {}'.format(hex(byte)), ftdi_commands, last_byte=byte)
 
