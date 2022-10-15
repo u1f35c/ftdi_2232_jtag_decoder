@@ -13,7 +13,7 @@ def pcap_json_reader(fin):
 
     for frame_idx, cap in enumerate(json.load(fin)):
         protocol = cap.get('_source', {}).get('layers', {}).get('frame', {}).get('frame.protocols')
-        if protocol != 'usb:ftdi-ft':
+        if protocol != 'usb:ftdi-ft' and protocol != 'usb:ftdi-ft:ftdi-mpsse':
             continue
 
         tx_data = cap.get('_source', {}).get('layers', {}).get('ftdi-ft', {}).get('ftdi-ft.if_a_tx_payload')
